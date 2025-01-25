@@ -1,0 +1,18 @@
+[package]
+name = "PepperBot"
+version = "0.1.0"
+authors = ["Crow <crowdedhd@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+dotenv = "0.15"
+tracing = "0.1.23"
+tracing-subscriber = "0.3"
+serenity = { version = "0.12.4", features = ["cache", "builder", "client", "gateway", "model", "utils", "collector", "framework", "rustls_backend"] }
+tokio = { version = "1.43.0", features = ["macros", "signal", "rt-multi-thread"] }
+poise = "0.6.1"
+reqwest = { version = "0.11.27", features = ["json"] }
+serde = { version = "1.0.217", features = ["derive"] }
+chrono = "0.4.39"
+serde_json = "1.0.137"
+serde_with = "3.12.0"
