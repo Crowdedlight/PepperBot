@@ -1,0 +1,8 @@
+
+services:
+  bot:
+    build: .
+    volumes:
+      - .moneyman:/app/.moneyman
+    env_file:
+      - ".env"

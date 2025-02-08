@@ -10,6 +10,9 @@ use std::{
     sync::{Arc, Mutex},
     time::Duration,
 };
+use tokio::task::spawn_blocking;
+use crate::commands::exchange;
+use crate::commands::exchange::exchange;
 
 // Types used by all command functions
 type Error = Box<dyn std::error::Error + Send + Sync>;
@@ -40,20 +43,26 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
 #[tokio::main]
 async fn main() {
     // This will load the environment variables located at `./.env`, relative to the CWD
-    dotenv::dotenv().expect("Failed to load .env file");
+    let _ = dotenv::dotenv();
 
     // Initialize the logger to use environment variables.
     //
     // In this case, a good default is setting the environment variable `RUST_LOG` to `debug`.
     tracing_subscriber::fmt::init();
 
+    // run init functions for the commands that need it
+    let _ = spawn_blocking(move || { exchange::init() }).await;//.await.expect("Failed to init exchange store");
+
     // FrameworkOptions contains all of poise's configuration option in one struct
     // Every option can be omitted to use its default value
     let options = poise::FrameworkOptions {
         commands: vec![
             commands::help::help(),
+            commands::help::ping(),
             commands::arma::digbyserver(),
-            commands::friday::friday()            
+            commands::friday::friday(),
+            commands::exchange::exchange(),
+            commands::calculate::calc()
         ],
 
         prefix_options: poise::PrefixFrameworkOptions {
@@ -84,7 +93,7 @@ async fn main() {
         // Every command invocation must pass this check to continue execution
         command_check: Some(|ctx| {
             Box::pin(async move {
-                if ctx.author().id == 123456789 {
+                if ctx.author().id == 535560662823469066 {
                     return Ok(false);
                 }
                 Ok(true)

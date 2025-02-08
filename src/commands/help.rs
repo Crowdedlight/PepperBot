@@ -19,3 +19,16 @@ pub async fn help(
         .await?;
     Ok(())
 }
+
+
+#[poise::command(prefix_command, slash_command)]
+pub async fn ping(
+    ctx: Context<'_>,
+    #[description = "ping"]
+    #[autocomplete = "poise::builtins::autocomplete_command"]
+    command: Option<String>,
+) -> Result<(), Error> {
+
+    ctx.say("Pong!").await?;
+    Ok(())
+}
