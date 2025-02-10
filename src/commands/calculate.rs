@@ -11,12 +11,20 @@ use crate::{Context, Error};
 use rink_core::*;
 
 
-/// Commands
+/// Calculate all kinds of things with known SI units
+///
+/// You can do all sorts of calculations with it. Check https://rinkcalc.app/manual to see what is possible \
+/// for temperature use degF and degC as units.
+/// 
+/// Trust me, you can do most conversions, but also do most scientific calculations!
+///
+/// Example:
+/// `~/calc 200m to feet`
+/// `~/calc 2^17 seconds -> hour;min;sec`
 #[poise::command(slash_command, prefix_command, track_edits)]
 pub async fn calc(
     ctx: Context<'_>,
     #[description = "calculate anything with support for units. See https://rinkcalc.app/manual for options"]
-    #[autocomplete = "poise::builtins::autocomplete_command"]
     input: String,
 ) -> Result<(), Error> {
 

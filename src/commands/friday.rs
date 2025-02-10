@@ -9,12 +9,13 @@ use serde_json::{Value};
 use serde_with::{serde_as, BoolFromInt};
 use crate::helpers::capitalize;
 
-/// Show this help menu
+/// Is it friday?
+///
+/// Is it friday? Truely?
 #[poise::command(prefix_command, slash_command, aliases("friday?"))]
 pub async fn friday(
     ctx: Context<'_>,
     #[description = "Is it friday?"]
-    #[autocomplete = "poise::builtins::autocomplete_command"]
     command: Option<String>,
 ) -> Result<(), Error> {
 

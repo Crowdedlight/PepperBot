@@ -35,12 +35,14 @@ struct ArmaStatus {
     modpack: String,
 }
 
-/// Show this help menu
+/// Show the status of the Digby Arma Server
+///
+/// Shows the current map, amount of players and modpack loaded on the Digby Arma server
+///
 #[poise::command(prefix_command, slash_command, aliases("digby?"))]
 pub async fn digbyserver(
     ctx: Context<'_>,
     #[description = "Status of Digbys Arma server?"]
-    #[autocomplete = "poise::builtins::autocomplete_command"]
     command: Option<String>,
 ) -> Result<(), Error> {
 

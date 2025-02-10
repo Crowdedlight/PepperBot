@@ -25,12 +25,16 @@ pub fn init() {
 }
 
 
-/// Commands
+/// Exchange valuta between currencies
+///
+/// Simply give the amount and then select the currency it is in, and what currency you want
+///
+/// Example:
+/// `~/exchange 120 EUR USD`
 #[poise::command(slash_command)]
 pub async fn exchange(
     ctx: Context<'_>,
     #[description = "Convert currency between different valutas"]
-    #[autocomplete = "poise::builtins::autocomplete_command"]
     #[min = 0]
     amount: i64,
     #[choices("USD", "EUR", "DKK", "SEK", "GBP", "CAD")]
@@ -52,7 +56,7 @@ pub async fn exchange(
             .expect("Failed to send err message");
         return Ok(())
     }
-    
+
     // store is not err, so we can unwrap
     let store = store_result.unwrap();
 
@@ -61,19 +65,18 @@ pub async fn exchange(
     let to_currency = iso::find(to).expect("failed to find currency");
 
     // get current money input
-    let input = Money::from_decimal(Decimal::new(amount, 2), from_currency);
+    let input = Money::from_decimal(Decimal::from(amount), from_currency);
 
-    // let latest_date = store.get_latest_date();
-    let date = Utc::now().naive_utc().date().checked_sub_days(Days::new(1)).unwrap();
+    let latest_date = store.get_latest_date().unwrap_or_default();
 
-    let converted_money = store.convert_on_date(input, to_currency, date);
+    let converted_money = store.convert_on_date(input, to_currency, latest_date)?;
 
     // else we are good, and can continue
 
     let embed = CreateEmbed::default()
         .colour(Colour::from_rgb(70, 199, 244))
         .field("Input", format!("{:?} {}", amount, from_currency.iso_alpha_code), false)
-        .field("Output", format!("{:?} {}", 00, to_currency.iso_alpha_code), false)
+        .field("Output", format!("{} {}", converted_money.amount().round_dp(2), to_currency.iso_alpha_code), false)
         .footer(CreateEmbedFooter::new(format!("Requested at: {}", Local::now())));
 
     let reply = CreateReply::default().embed(embed).reply(true);

@@ -11,12 +11,13 @@ use serenity::all::{RoleId, UserId};
 use crate::helpers::capitalize;
 use rand::seq::SliceRandom;
 
-/// Show this help menu
-#[poise::command(prefix_command, slash_command)]
+/// Do you have a gold star?
+///
+/// This command is only for those that have a certified real gold star!
+#[poise::command(prefix_command, slash_command, user_cooldown = 30)]
 pub async fn goldstar(
     ctx: Context<'_>,
     #[description = "Do you have a gold star?"]
-    #[autocomplete = "poise::builtins::autocomplete_command"]
     command: Option<String>,
 ) -> Result<(), Error> {
 

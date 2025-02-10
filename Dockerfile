@@ -21,7 +21,7 @@ RUN cargo build --release --bin PepperBot
 
 # We do not need the Rust toolchain to run the binary!
 FROM debian:bookworm-slim AS runtime
-RUN apt-get update && apt-get install -y pkg-config libssl-dev
+RUN apt-get update && apt-get install -y pkg-config libssl-dev ca-certificates
 WORKDIR app
 COPY --from=builder /app/target/release/PepperBot /app
 ENTRYPOINT ["/app/PepperBot"]

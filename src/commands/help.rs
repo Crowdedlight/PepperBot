@@ -21,11 +21,13 @@ pub async fn help(
 }
 
 
-#[poise::command(prefix_command, slash_command)]
+#[poise::command(
+    prefix_command,
+    slash_command,
+)]
 pub async fn ping(
     ctx: Context<'_>,
     #[description = "ping"]
-    #[autocomplete = "poise::builtins::autocomplete_command"]
     command: Option<String>,
 ) -> Result<(), Error> {
 
