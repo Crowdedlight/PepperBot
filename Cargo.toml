@@ -20,3 +20,4 @@ moneyman = "0.1.2"
 rusty-money = "0.4.1"
 rust_decimal = "1.36.0"
 rink-core = { version = "0.8", features = ["bundle-files", "chrono-humanize"] }
+rand = "0.8.5"

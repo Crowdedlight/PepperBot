@@ -11,8 +11,6 @@ use std::{
     time::Duration,
 };
 use tokio::task::spawn_blocking;
-use crate::commands::exchange;
-use crate::commands::exchange::exchange;
 
 // Types used by all command functions
 type Error = Box<dyn std::error::Error + Send + Sync>;
@@ -51,7 +49,7 @@ async fn main() {
     tracing_subscriber::fmt::init();
 
     // run init functions for the commands that need it
-    let _ = spawn_blocking(move || { exchange::init() }).await;//.await.expect("Failed to init exchange store");
+    let _ = spawn_blocking(move || { commands::exchange::init() }).await;
 
     // FrameworkOptions contains all of poise's configuration option in one struct
     // Every option can be omitted to use its default value
@@ -62,7 +60,8 @@ async fn main() {
             commands::arma::digbyserver(),
             commands::friday::friday(),
             commands::exchange::exchange(),
-            commands::calculate::calc()
+            commands::calculate::calc(),
+            commands::goldstar::goldstar(),
         ],
 
         prefix_options: poise::PrefixFrameworkOptions {

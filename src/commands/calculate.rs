@@ -15,7 +15,7 @@ use rink_core::*;
 #[poise::command(slash_command, prefix_command, track_edits)]
 pub async fn calc(
     ctx: Context<'_>,
-    #[description = "calculate anything with support for units. See https://rinkcalc.app/manual#temperature-conversions for options"]
+    #[description = "calculate anything with support for units. See https://rinkcalc.app/manual for options"]
     #[autocomplete = "poise::builtins::autocomplete_command"]
     input: String,
 ) -> Result<(), Error> {

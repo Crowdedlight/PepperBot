@@ -10,6 +10,7 @@ dependencies = [
  "dotenv",
  "moneyman",
  "poise",
+ "rand",
  "reqwest",
  "rink-core",
  "rust_decimal",
